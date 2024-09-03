@@ -33,15 +33,15 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             'Y': 0.22, 'Z': 0.09
         };
 
-        // Prepare data for the chart
-        let labels = [];
+        // Prepare data for the chart in alphabetical order
+        let labels = Object.keys(letterFrequency).sort();
         let yourData = [];
         let censusData = [];
-        for (let letter in letterFrequency) {
-            labels.push(letter);
+
+        labels.forEach(letter => {
             yourData.push(((letterFrequency[letter] / names.length) * 100).toFixed(2));
             censusData.push(censusFrequencies[letter] || 0);
-        }
+        });
 
         // Create the chart
         var ctx = document.getElementById('myChart').getContext('2d');
