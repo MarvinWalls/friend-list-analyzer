@@ -69,11 +69,34 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Frequency (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Letter'
+                        }
                     }
                 }
             }
         });
+
+        // Display results for clicking on a letter in the chart
+        document.getElementById('results').innerHTML = '<h3>Click on a letter in the chart to see the corresponding names.</h3>';
+
+        ctx.onclick = function(evt) {
+            var activePoints = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false);
+            if (activePoints.length > 0) {
+                var index = activePoints[0].index;
+                var letter = labels[index];
+                var filteredNames = names.filter(name => name.startsWith(letter));
+                document.getElementById('results').innerHTML = '<h3>Names starting with ' + letter + ':</h3><p>' + filteredNames.join(', ') + '</p>';
+            }
+        };
     };
     
     reader.readAsText(file);
