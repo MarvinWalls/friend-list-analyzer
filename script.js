@@ -33,18 +33,47 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             'Y': 0.22, 'Z': 0.09
         };
 
-        // Calculate total names for percentage calculation
-        let totalNames = names.length;
-
-        // Display the letter frequencies and compare with Census data
-        let resultString = 'Letter Frequency Comparison: <br>';
+        // Prepare data for the chart
+        let labels = [];
+        let yourData = [];
+        let censusData = [];
         for (let letter in letterFrequency) {
-            let frequency = ((letterFrequency[letter] / totalNames) * 100).toFixed(2); // Calculate percentage
-            let censusFrequency = censusFrequencies[letter] || 0; // Get census frequency or 0 if not found
-            resultString += `${letter}: ${frequency}% (Your Data) vs ${censusFrequency}% (Census Data)<br>`;
+            labels.push(letter);
+            yourData.push(((letterFrequency[letter] / names.length) * 100).toFixed(2));
+            censusData.push(censusFrequencies[letter] || 0);
         }
 
-        document.getElementById('results').innerHTML = resultString;
+        // Create the chart
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Your Data (%)',
+                        data: yourData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Census Data (%)',
+                        data: censusData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     };
     
     reader.readAsText(file);
