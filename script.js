@@ -41,7 +41,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         let userFirstLetter = userName.charAt(0).toUpperCase();
         let userLetterFrequency = ((letterFrequency[userFirstLetter] / names.length) * 100).toFixed(2);
         let censusLetterFrequency = censusFrequencies[userFirstLetter] || 0;
-        let frequencyComparison = (userLetterFrequency - censusLetterFrequency).toFixed(2);
+        let percentageDifference = (((userLetterFrequency - censusLetterFrequency) / censusLetterFrequency) * 100).toFixed(2);
 
         // Prepare data for the chart in alphabetical order
         let labels = Object.keys(letterFrequency).sort();
@@ -77,6 +77,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
                 ]
             },
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -96,7 +97,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         });
 
         // Display personalized greeting
-        document.getElementById('results').innerHTML = `<h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', which appears ${frequencyComparison}% ${frequencyComparison >= 0 ? 'more' : 'less'} than the census average.</h3>`;
+        document.getElementById('results').innerHTML = `<h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', which appears ${percentageDifference}% ${percentageDifference >= 0 ? 'more' : 'less'} than the census average.</h3>`;
 
         // Display results for clicking on a letter in the chart
         ctx.onclick = function(evt) {
