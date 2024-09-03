@@ -6,6 +6,10 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         const parser = new DOMParser();
         const doc = parser.parseFromString(e.target.result, 'text/html');
         
+        // Extract user's name
+        let userNameElement = doc.querySelector('span._a7cv');
+        let userName = userNameElement ? userNameElement.textContent.trim() : 'User';
+
         // Extract names from div with class _a6-i
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
 
@@ -32,6 +36,12 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             'S': 6.45, 'T': 3.80, 'U': 0.02, 'V': 1.61, 'W': 1.66, 'X': 0.01,
             'Y': 0.22, 'Z': 0.09
         };
+
+        // Get the first letter of the user's name
+        let userFirstLetter = userName.charAt(0).toUpperCase();
+        let userLetterFrequency = ((letterFrequency[userFirstLetter] / names.length) * 100).toFixed(2);
+        let censusLetterFrequency = censusFrequencies[userFirstLetter] || 0;
+        let frequencyComparison = (userLetterFrequency - censusLetterFrequency).toFixed(2);
 
         // Prepare data for the chart in alphabetical order
         let labels = Object.keys(letterFrequency).sort();
@@ -85,16 +95,17 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             }
         });
 
-        // Display results for clicking on a letter in the chart
-        document.getElementById('results').innerHTML = '<h3>Click on a letter in the chart to see the corresponding names.</h3>';
+        // Display personalized greeting
+        document.getElementById('results').innerHTML = `<h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', which appears ${frequencyComparison}% ${frequencyComparison >= 0 ? 'more' : 'less'} than the census average.</h3>`;
 
+        // Display results for clicking on a letter in the chart
         ctx.onclick = function(evt) {
             var activePoints = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false);
             if (activePoints.length > 0) {
                 var index = activePoints[0].index;
                 var letter = labels[index];
                 var filteredNames = names.filter(name => name.startsWith(letter));
-                document.getElementById('results').innerHTML = '<h3>Names starting with ' + letter + ':</h3><p>' + filteredNames.join(', ') + '</p>';
+                document.getElementById('results').innerHTML += `<h3>Names starting with '${letter}':</h3><p>${filteredNames.join(', ')}</p>`;
             }
         };
     };
