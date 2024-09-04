@@ -6,9 +6,9 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         const parser = new DOMParser();
         const doc = parser.parseFromString(e.target.result, 'text/html');
         
-        // Extract user's name (only the name, avoid Home or other elements)
-        let userNameElement = doc.querySelector('span._a7cv > a._a7cw');
-        let userName = userNameElement ? userNameElement.textContent.trim() : 'User';
+        // Extract user's name (refined to avoid "Home" and other texts)
+        let userNameElement = doc.querySelector('span._a7cv > a._a7cw._a7cy');
+        let userName = userNameElement ? userNameElement.childNodes[2].textContent.trim() : 'User';
 
         // Extract names from div with class _a6-i
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
@@ -42,6 +42,18 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         let userLetterFrequency = ((letterFrequency[userFirstLetter] / names.length) * 100).toFixed(2);
         let censusLetterFrequency = censusFrequencies[userFirstLetter] || 0;
         let percentageDifference = (((userLetterFrequency - censusLetterFrequency) / censusLetterFrequency) * 100).toFixed(2);
+
+        // Determine the message based on percentage difference
+        let effectMessage = '';
+        if (percentageDifference > 20) {
+            effectMessage = "Based on your friends, you are heavily affected by the name-letter effect you simple creature you.";
+        } else if (percentageDifference > 10) {
+            effectMessage = "Based on your friends, the name-letter is moderately affecting your life.";
+        } else if (percentageDifference > 0) {
+            effectMessage = "Based on your friends, you are mildly affected by the name-letter effect.";
+        } else {
+            effectMessage = "The name-letter effect doesn't seem present in your life.";
+        }
 
         // Prepare data for the chart in alphabetical order
         let labels = Object.keys(letterFrequency).sort();
@@ -97,8 +109,9 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             }
         });
 
-        // Display personalized greeting
+        // Display personalized greeting with effect message
         document.getElementById('results').innerHTML = `<h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', which appears ${percentageDifference}% ${percentageDifference >= 0 ? 'more' : 'less'} than the census average.</h3>`;
+        document.getElementById('results').innerHTML += `<p>${effectMessage}</p>`;
 
         // Display results for clicking on a letter in the chart
         ctx.onclick = function(evt) {
