@@ -1,17 +1,29 @@
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
+    
+    // Check if the file is an HTML file
+    if (file.type !== 'text/html') {
+        document.getElementById('results').innerHTML = `<p style="color: red;">Please upload a valid HTML file.</p>`;
+        return;
+    }
+
     const reader = new FileReader();
     
     reader.onload = function(e) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(e.target.result, 'text/html');
-        
+
         // Extract user's name (refined to avoid "Home" and other texts)
         let userNameElement = doc.querySelector('span._a7cv > a._a7cw._a7cy');
         let userName = userNameElement ? userNameElement.childNodes[2].textContent.trim() : 'User';
 
         // Extract names from div with class _a6-i
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
+
+        if (names.length === 0) {
+            document.getElementById('results').innerHTML = `<p style="color: red;">No names found in the uploaded HTML file. Please ensure you are uploading the correct Facebook friend list HTML file.</p>`;
+            return;
+        }
 
         // Extract the first letter of each name and count the frequency
         let letterFrequency = {};
