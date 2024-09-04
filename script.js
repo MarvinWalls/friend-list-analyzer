@@ -6,8 +6,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         const parser = new DOMParser();
         const doc = parser.parseFromString(e.target.result, 'text/html');
         
-        // Extract user's name
-        let userNameElement = doc.querySelector('span._a7cv');
+        // Extract user's name (only the name, avoid Home or other elements)
+        let userNameElement = doc.querySelector('span._a7cv > a._a7cw');
         let userName = userNameElement ? userNameElement.textContent.trim() : 'User';
 
         // Extract names from div with class _a6-i
@@ -78,6 +78,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
