@@ -1,6 +1,6 @@
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
-    
+
     // Check if the file is an HTML file
     if (file.type !== 'text/html') {
         document.getElementById('results').innerHTML = `<p style="color: red;">Please upload a valid HTML file.</p>`;
@@ -8,14 +8,20 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     }
 
     const reader = new FileReader();
-    
+
     reader.onload = function(e) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(e.target.result, 'text/html');
 
         // Extract user's name (refined to avoid "Home" and other texts)
         let userNameElement = doc.querySelector('span._a7cv > a._a7cw._a7cy');
-        let userName = userNameElement ? userNameElement.textContent.trim() : 'User';
+        let userName = 'User'; // Default value
+
+        // Check if the element exists and if it contains the expected structure
+        if (userNameElement) {
+            // Make sure to get the correct text node (the actual name)
+            userName = userNameElement.innerText.trim();
+        }
 
         // Extract names from div with class _a6-i
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
@@ -102,7 +108,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -136,6 +142,6 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             }
         };
     };
-    
+
     reader.readAsText(file);
 });
