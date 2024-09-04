@@ -15,13 +15,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
         // Extract user's name (refined to avoid "Home" and other texts)
         let userNameElement = doc.querySelector('span._a7cv > a._a7cw._a7cy');
-        let userName = 'User'; // Default value
-
-        // Check if the element exists and if it contains the expected structure
-        if (userNameElement) {
-            // The user's name seems to be at the end of the anchor tag's child nodes
-            userName = userNameElement.childNodes[userNameElement.childNodes.length - 1].textContent.trim();
-        }
+        let userName = userNameElement ? userNameElement.childNodes[2].textContent.trim() : 'User';
 
         // Extract names from div with class _a6-i
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
@@ -108,7 +102,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true, // Maintain a fixed aspect ratio
+                aspectRatio: 2, // Define a 2:1 ratio, feel free to adjust
                 scales: {
                     y: {
                         beginAtZero: true,
