@@ -102,8 +102,8 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true, // Maintain a fixed aspect ratio
-                aspectRatio: 2, // Define a 2:1 ratio, feel free to adjust
+                maintainAspectRatio: false,  // Adjust this to false
+                aspectRatio: 2,  // Adjust this if needed
                 scales: {
                     y: {
                         beginAtZero: true,
