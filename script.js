@@ -126,6 +126,14 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         document.getElementById('results').innerHTML = `<h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', which appears ${percentageDifference}% ${percentageDifference >= 0 ? 'more' : 'less'} than the census average.</h3>`;
         document.getElementById('results').innerHTML += `<p>${effectMessage}</p>`;
 
+        // Display all friends in a table
+        let tableHTML = `<h3>Friends List</h3><table id="allFriendsTable" border="1" cellpadding="5" cellspacing="0"><thead><tr><th>Name</th></tr></thead><tbody>`;
+        names.forEach(friendName => {
+            tableHTML += `<tr><td>${friendName}</td></tr>`;
+        });
+        tableHTML += `</tbody></table>`;
+        document.getElementById('results').innerHTML += tableHTML;
+
         // Display results for clicking on a letter in the chart
         ctx.onclick = function(evt) {
             var activePoints = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false);
@@ -134,15 +142,15 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
                 var letter = labels[index];
                 var filteredNames = names.filter(name => name.startsWith(letter));
 
-                // Display the friends in a table format
-                let tableHTML = `<h3>Names starting with '${letter}':</h3><table border="1" cellpadding="5" cellspacing="0"><thead><tr><th>Name</th></tr></thead><tbody>`;
+                // Display filtered friends in a table
+                let filteredTableHTML = `<h3>Names starting with '${letter}':</h3><table border="1" cellpadding="5" cellspacing="0"><thead><tr><th>Name</th></tr></thead><tbody>`;
                 filteredNames.forEach(friendName => {
-                    tableHTML += `<tr><td>${friendName}</td></tr>`;
+                    filteredTableHTML += `<tr><td>${friendName}</td></tr>`;
                 });
-                tableHTML += `</tbody></table>`;
+                filteredTableHTML += `</tbody></table>`;
 
-                // Append the table to the results section
-                document.getElementById('results').innerHTML += tableHTML;
+                // Replace the existing table with the filtered table
+                document.getElementById('results').innerHTML += filteredTableHTML;
             }
         };
     };
