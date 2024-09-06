@@ -22,3 +22,7 @@ function filterTableByLetter(letter, names) {
         tableBody.innerHTML += row;
     });
 }
+
+// Make the functions globally accessible
+window.generateTable = generateTable;
+window.filterTableByLetter = filterTableByLetter;
