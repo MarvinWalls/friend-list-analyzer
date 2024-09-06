@@ -13,6 +13,21 @@
             max-width: 1200px; /* Maximum width for larger screens */
             margin: 0 auto;
         }
+        /* Table styles */
+        #friendTable {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        #friendTable th, #friendTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #friendTable th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +59,17 @@
 
     <!-- Enlarged Canvas for the Chart -->
     <canvas id="myChart"></canvas>
+
+    <!-- Table to display friends by letter -->
+    <table id="friendTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>Friends' Names Starting with Selected Letter</th>
+            </tr>
+        </thead>
+        <tbody id="friendTableBody">
+        </tbody>
+    </table>
 
     <script src="script.js"></script>
 </body>
