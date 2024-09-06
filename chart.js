@@ -1,4 +1,4 @@
-export function generateChart(labels, yourData, censusData, handleChartClick) {
+function generateChart(labels, yourData, censusData, handleChartClick) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -45,3 +45,6 @@ export function generateChart(labels, yourData, censusData, handleChartClick) {
 
     ctx.onclick = handleChartClick;
 }
+
+// Make the function globally accessible
+window.generateChart = generateChart;

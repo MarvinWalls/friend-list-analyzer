@@ -49,7 +49,10 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 // Show loading spinner
 function showLoadingSpinner() {
-    document.getElementById('results').innerHTML = `<div id="spinner" class="spinner"></div>`;
+    const spinnerHTML = `<div id="spinner" class="spinner"></div>`;
+    if (!document.getElementById('spinner')) { // Check if spinner doesn't already exist
+        document.getElementById('results').insertAdjacentHTML('beforeend', spinnerHTML);
+    }
 }
 
 // Hide loading spinner
@@ -60,9 +63,14 @@ function hideLoadingSpinner() {
     }
 }
 
-// Dummy function to handle name processing
+// Function to handle name processing
 function processNameData(userName, names) {
     // Example processing logic (replace with actual data handling)
     console.log(userName, names);
     document.getElementById('results').innerHTML = `<p>Processed ${names.length} friends for user ${userName}.</p>`;
 }
+
+// Make functions globally accessible
+window.showLoadingSpinner = showLoadingSpinner;
+window.hideLoadingSpinner = hideLoadingSpinner;
+window.processNameData = processNameData;
