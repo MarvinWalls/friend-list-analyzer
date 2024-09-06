@@ -51,14 +51,15 @@ input[type="file"]:hover {
 
 #myChart {
     width: 100%;
-    height: 600px; /* Increase the height */
-    max-width: 1200px;
+    height: 500px; /* Fixed height */
+    max-width: 900px; /* Max width to avoid stretching */
     margin: 0 auto;
 }
 
 #friendTable {
     width: 100%;
-    margin: 20px 0;
+    max-width: 900px; /* Limit the table width */
+    margin: 20px auto;
     border-collapse: collapse;
 }
 

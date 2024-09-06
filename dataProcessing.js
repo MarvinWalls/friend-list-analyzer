@@ -101,8 +101,8 @@ function processNameData(userName, names) {
         effectMessage = "The name-letter effect doesn't seem present in your life.";
     }
 
-    // Now call the chart generation function
-    generateChart(labels, yourData, censusData, handleChartClick);
+    // Now call the chart generation function and pass `names` to handleChartClick
+    generateChart(labels, yourData, censusData, function(event) { handleChartClick(event, names); });
 
     // Update the results section with personalized greeting and effect message
     document.getElementById('results').innerHTML = `
@@ -124,8 +124,8 @@ function getCensusData(letter) {
     return censusFrequencies[letter] || 0; // Return 0 if letter is not found
 }
 
-// Handle chart click events (optional)
-function handleChartClick(event) {
+// Handle chart click events
+function handleChartClick(event, names) {
     var activePoints = myChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
     if (activePoints.length > 0) {
         var clickedIndex = activePoints[0].index;
