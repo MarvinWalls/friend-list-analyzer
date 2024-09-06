@@ -127,12 +127,14 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         document.getElementById('results').innerHTML += `<p>${effectMessage}</p>`;
 
         // Display all friends in a table
-        let tableHTML = `<h3>Friends List</h3><table id="allFriendsTable" border="1" cellpadding="5" cellspacing="0"><thead><tr><th>Name</th></tr></thead><tbody>`;
+        let tableBody = document.getElementById('friendTableBody');
+        tableBody.innerHTML = ''; // Clear previous data
         names.forEach(friendName => {
-            tableHTML += `<tr><td>${friendName}</td></tr>`;
+            let firstLetter = friendName.charAt(0).toUpperCase();
+            let row = `<tr><td>${firstLetter}</td><td>${friendName}</td></tr>`;
+            tableBody.innerHTML += row;
         });
-        tableHTML += `</tbody></table>`;
-        document.getElementById('results').innerHTML += tableHTML;
+        document.getElementById('friendTable').style.display = 'table'; // Show the table
 
         // Display results for clicking on a letter in the chart
         ctx.onclick = function(evt) {
@@ -142,15 +144,12 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
                 var letter = labels[index];
                 var filteredNames = names.filter(name => name.startsWith(letter));
 
-                // Display filtered friends in a table
-                let filteredTableHTML = `<h3>Names starting with '${letter}':</h3><table border="1" cellpadding="5" cellspacing="0"><thead><tr><th>Name</th></tr></thead><tbody>`;
+                // Clear the table and add filtered friends
+                tableBody.innerHTML = '';
                 filteredNames.forEach(friendName => {
-                    filteredTableHTML += `<tr><td>${friendName}</td></tr>`;
+                    let row = `<tr><td>${letter}</td><td>${friendName}</td></tr>`;
+                    tableBody.innerHTML += row;
                 });
-                filteredTableHTML += `</tbody></table>`;
-
-                // Replace the existing table with the filtered table
-                document.getElementById('results').innerHTML += filteredTableHTML;
             }
         };
     };

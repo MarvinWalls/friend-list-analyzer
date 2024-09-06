@@ -9,8 +9,8 @@
     <style>
         #myChart {
             width: 100%;
-            height: 500px;
-            max-width: 1200px;
+            height: 500px; /* Adjust height as needed */
+            max-width: 1200px; /* Maximum width for larger screens */
             margin: 0 auto;
         }
         /* Table styles */
@@ -60,11 +60,11 @@
     <!-- Enlarged Canvas for the Chart -->
     <canvas id="myChart"></canvas>
 
-    <!-- Table to display all friends -->
-    <h3>Friends List</h3>
-    <table id="friendTable">
+    <!-- Table to display friends by letter -->
+    <table id="friendTable" style="display:none;">
         <thead>
             <tr>
+                <th>First Letter</th>
                 <th>Friend's Name</th>
             </tr>
         </thead>
