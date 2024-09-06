@@ -7,25 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Spinner styles */
-        #spinner {
-            display: none;
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Limit the chart to prevent it from stretching indefinitely */
+        #myChart {
+            width: 100%;
+            max-width: 1200px;
+            height: 400px; /* Limit the height to a reasonable size */
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -37,21 +24,18 @@
     <div class="instructions">
         <h2>How to Download Your Facebook Friend Data</h2>
         <ol>
-            <li>Navigate to <strong>Settings & Privacy</strong> within Facebook using a web browser such as Chrome, Safari, or Edge (the app no longer allows data downloads).</li>
-            <li>Go to settings and find <strong>Download your Information</strong> under <strong>Your Information.</strong></li>
+            <li>Navigate to <strong>Settings & Privacy</strong> within Facebook on the Web or app.</li>
+            <li>Go to settings and find <strong>"Download your Information"</strong> under <strong>"Your Information."</strong></li>
             <li>Click <strong>Continue.</strong></li>
             <li>Click <strong>Download your information.</strong></li>
             <li>Select the profile from which you want to download your friend's list or select multiple!</li>
-            <li>Then click <strong>Specific types of information.</strong> If you only want to download your friend's list, feel free to do so. It is recommended to download all the data, as it is interesting, but this will take longer.</li>
-            <li>If selecting <strong>Specific types of information,</strong> scroll down and choose Friends if pulling from Facebook or Followers and Following if pulling data from Instagram.</li>
+            <li>Then click <strong>"Specific types of information."</strong> If you only want to download your friend's list, feel free to do so. It is recommended to download all the data, as it is interesting, but this will take longer.</li>
+            <li>If selecting <strong>"Specific types of information,"</strong> scroll down and choose Friends if pulling from Facebook or Followers and Following if pulling data from Instagram.</li>
             <li>Select <strong>Download to Device</strong> and click next.</li>
-            <li>Update the <strong>Date Range</strong> to <strong>All Time.</strong> Make sure the format is in <strong>HTML</strong> and the right email is selected to receive the file. Upon entering those fields, click <strong>Create Files.</strong> Facebook will take 1-4 days (usually shorter) to process your request and provide the data as a ZIP file to your email.</li>
-            <li>Once you have the ZIP file, decompress it by extracting its contents. Inside the extracted folders, navigate to <strong>Connections</strong> -> <strong>Friends</strong> for Facebook data, or <strong>Connections</strong> -> <strong>Followers</strong> if using Instagram data. The file you'll need to load for analysis will be named <strong>your_friends.html</strong> or <strong>your_followers.html</strong>, depending on the source of your data.</li>
+            <li>Update the <strong>Date Range</strong> to <strong>"All Time."</strong> Make sure the format is in <strong>HTML</strong> and the right email is selected to receive the file. Upon entering those fields, click <strong>"Create Files."</strong> Facebook will take 1-4 days (usually shorter) to process your request and provide an HTML file of your friends list to your email. If you downloaded all of your information, the friends list will be in a zip folder.</li>
+            <li>Once you have the file, load it below and <strong>enjoy your findings!</strong></li>
         </ol>
     </div>
-
-    <!-- Spinner -->
-    <div id="spinner"></div>
     
     <!-- File upload input -->
     <input type="file" id="fileInput" accept=".html">
@@ -60,40 +44,8 @@
     <div id="results"></div>
 
     <!-- Enlarged Canvas for the Chart -->
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart"></canvas>
 
-    <!-- Table to display friends by letter -->
-    <table id="friendTable" style="display:none; max-height: 400px; overflow-y: auto; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th>First Letter</th>
-                <th>Friend Name</th>
-            </tr>
-        </thead>
-        <tbody id="friendTableBody">
-        </tbody>
-    </table>
-
-    <!-- External JS Files (Ensure table.js loads before dataProcessing.js to avoid errors) -->
-    <script src="table.js" defer></script> <!-- Loaded first to ensure generateTable is available -->
-    <script src="chart.js" defer></script>
-    <script src="dataProcessing.js" defer></script> <!-- Loaded last to use functions from table.js -->
-
-    <script>
-        // Spinner handling - show before processing starts, hide when processing is done
-        function showSpinner() {
-            document.getElementById('spinner').style.display = 'block';
-        }
-
-        function hideSpinner() {
-            document.getElementById('spinner').style.display = 'none';
-        }
-
-        // Event listener for file upload
-        document.getElementById('fileInput').addEventListener('change', function() {
-            console.log('File selected. Showing spinner.');
-            showSpinner();  // Show the spinner when the file starts uploading
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

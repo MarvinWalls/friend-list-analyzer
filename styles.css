@@ -1,100 +1,50 @@
-html, body {
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend List Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #myChart {
+            width: 100%;
+            height: 500px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Friend List Analyzer</h1>
+    <p>Upload your friends list HTML file to analyze the names.</p>
 
-h1 {
-    color: #0056b3;
-    text-align: center;
-    margin-bottom: 20px;
-}
+    <!-- Instructions for downloading Facebook data -->
+    <div class="instructions">
+        <h2>How to Download Your Facebook Friend Data</h2>
+        <ol>
+            <li>Navigate to <strong>Settings & Privacy</strong> within Facebook on the Web or app.</li>
+            <li>Go to settings and find <strong>"Download your Information"</strong> under <strong>"Your Information."</strong></li>
+            <li>Click <strong>Continue.</strong></li>
+            <li>Click <strong>Download your information.</strong></li>
+            <li>Select the profile from which you want to download your friend's list or select multiple!</li>
+            <li>Then click <strong>"Specific types of information."</strong> If you only want to download your friend's list, feel free to do so. It is recommended to download all the data, as it is interesting, but this will take longer.</li>
+            <li>If selecting <strong>"Specific types of information,"</strong> scroll down and choose Friends if pulling from Facebook or Followers and Following if pulling data from Instagram.</li>
+            <li>Select <strong>Download to Device</strong> and click next.</li>
+            <li>Update the <strong>Date Range</strong> to <strong>"All Time."</strong> Make sure the format is in HTML and the right email is selected to receive the file. Upon entering those fields, click <strong>"Create Files".</strong> Facebook will take 1-4 days (usually shorter) to process your request and provide an HTML file of your friends list to your email. If you downloaded all of your information, the friends list will be in a zip folder.</li>
+            <li>Once you have the file, load it below and enjoy your findings!</li>
+        </ol>
+    </div>
+    
+    <!-- File upload input -->
+    <input type="file" id="fileInput" accept=".html">
 
-#instructions {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
+    <!-- Results display area -->
+    <div id="results"></div>
 
-#instructions h2 {
-    color: #0056b3;
-    margin-bottom: 10px;
-}
+    <!-- Enlarged Canvas for the Chart -->
+    <canvas id="myChart"></canvas>
 
-#instructions ol {
-    padding-left: 20px;
-}
-
-input[type="file"] {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-input[type="file"]:hover {
-    background-color: #004494;
-}
-
-#results {
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-#myChart {
-    width: 100%;
-    height: 500px; /* Fixed height */
-    max-width: 900px; /* Max width to avoid stretching */
-    margin: 0 auto; /* Center the chart */
-    overflow: hidden; /* Prevent unexpected overflow */
-}
-
-#friendTable {
-    width: 100%;
-    max-width: 900px; /* Limit the table width */
-    margin: 20px auto;
-    border-collapse: collapse;
-    table-layout: fixed; /* Prevent columns from stretching */
-    word-wrap: break-word; /* Prevent long names from breaking the layout */
-    max-height: 400px; /* Limit the height of the table */
-    overflow-y: auto; /* Add vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal overflow */
-}
-
-#friendTable th, #friendTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    max-width: 150px; /* Limit max width of table cells */
-}
-
-#friendTable th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-/* Spinner styles */
-#spinner {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    margin: 20px auto;
-    display: none; /* Ensure it starts hidden */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+    <script src="script.js"></script>
+</body>
+</html>
