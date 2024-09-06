@@ -65,10 +65,10 @@
         </tbody>
     </table>
 
-    <!-- External JS Files -->
-    <script src="dataProcessing.js" defer></script>
-    <script src="table.js" defer></script>
+    <!-- External JS Files (Ensure table.js loads before dataProcessing.js to avoid errors) -->
+    <script src="table.js" defer></script> <!-- Loaded first to ensure generateTable is available -->
     <script src="chart.js" defer></script>
+    <script src="dataProcessing.js" defer></script> <!-- Loaded last to use functions from table.js -->
 
     <script>
         // Spinner handling - show before processing starts, hide when processing is done
