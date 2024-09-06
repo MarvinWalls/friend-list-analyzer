@@ -7,6 +7,9 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         return;
     }
 
+    // Show loading spinner while processing
+    showLoadingSpinner();
+
     const reader = new FileReader();
 
     reader.onload = function(e) {
@@ -29,12 +32,34 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         let names = Array.from(doc.querySelectorAll('div._a6-i')).map(el => el.textContent.trim());
 
         if (names.length === 0) {
+            hideLoadingSpinner(); // Hide spinner if no names found
             document.getElementById('results').innerHTML = `<p style="color: red;">No names found in the uploaded HTML file.</p>`;
             return;
         }
 
+        // Process the names data
         processNameData(userName, names);
+
+        // Hide the loading spinner after processing
+        hideLoadingSpinner();
     };
 
     reader.readAsText(file);
 });
+
+// Show loading spinner
+function showLoadingSpinner() {
+    document.getElementById('results').innerHTML = `<div class="spinner"></div>`;
+}
+
+// Hide loading spinner
+function hideLoadingSpinner() {
+    document.querySelector('.spinner').remove();
+}
+
+// Dummy function to handle name processing
+function processNameData(userName, names) {
+    // Process the userName and names (this can be your existing logic)
+    console.log(userName, names);
+    document.getElementById('results').innerHTML = `<p>Processed ${names.length} friends for user ${userName}.</p>`;
+}

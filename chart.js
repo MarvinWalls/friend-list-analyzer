@@ -1,13 +1,4 @@
-function createChart(letterFrequency, censusFrequencies, names) {
-    let labels = Object.keys(letterFrequency).sort();
-    let yourData = [];
-    let censusData = [];
-
-    labels.forEach(letter => {
-        yourData.push(((letterFrequency[letter] / names.length) * 100).toFixed(2));
-        censusData.push(censusFrequencies[letter] || 0);
-    });
-
+export function generateChart(labels, yourData, censusData, handleChartClick) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -52,5 +43,5 @@ function createChart(letterFrequency, censusFrequencies, names) {
         }
     });
 
-    return myChart;
+    ctx.onclick = handleChartClick;
 }
