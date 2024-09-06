@@ -49,17 +49,20 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 // Show loading spinner
 function showLoadingSpinner() {
-    document.getElementById('results').innerHTML = `<div class="spinner"></div>`;
+    document.getElementById('results').innerHTML = `<div id="spinner" class="spinner"></div>`;
 }
 
 // Hide loading spinner
 function hideLoadingSpinner() {
-    document.querySelector('.spinner').remove();
+    const spinner = document.getElementById('spinner');
+    if (spinner) {
+        spinner.remove();
+    }
 }
 
 // Dummy function to handle name processing
 function processNameData(userName, names) {
-    // Process the userName and names (this can be your existing logic)
+    // Example processing logic (replace with actual data handling)
     console.log(userName, names);
     document.getElementById('results').innerHTML = `<p>Processed ${names.length} friends for user ${userName}.</p>`;
 }
