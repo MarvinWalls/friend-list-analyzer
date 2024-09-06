@@ -7,26 +7,25 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        #myChart {
-            width: 100%;
-            height: 500px; /* Adjust height as needed */
-            max-width: 1200px; /* Maximum width for larger screens */
-            margin: 0 auto;
+        /* Spinner styles */
+        #spinner {
+            display: none;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
         }
-        /* Table styles */
-        #friendTable {
-            width: 100%;
-            margin: 20px 0;
-            border-collapse: collapse;
-        }
-        #friendTable th, #friendTable td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        #friendTable th {
-            background-color: #f4f4f4;
-            font-weight: bold;
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -50,6 +49,9 @@
             <li>Once you have the ZIP file, decompress it by extracting its contents. Inside the extracted folders, navigate to <strong>Connections</strong> -> <strong>Friends</strong> for Facebook data, or <strong>Connections</strong> -> <strong>Followers</strong> if using Instagram data. The file you'll need to load for analysis will be named <strong>your_friends.html</strong> or <strong>your_followers.html</strong>, depending on the source of your data.</li>
         </ol>
     </div>
+
+    <!-- Spinner -->
+    <div id="spinner"></div>
     
     <!-- File upload input -->
     <input type="file" id="fileInput" accept=".html">
@@ -65,13 +67,37 @@
         <thead>
             <tr>
                 <th>First Letter</th>
-                <th>Friend's Name</th>
+                <th>Friend Name</th>
             </tr>
         </thead>
         <tbody id="friendTableBody">
         </tbody>
     </table>
 
-    <script src="script.js"></script>
+    <!-- External JS Files -->
+    <script src="dataProcessing.js"></script>
+    <script src="table.js"></script>
+    <script src="chart.js"></script>
+
+    <script>
+        // Spinner handling - show before processing starts, hide when processing is done
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+
+        function hideSpinner() {
+            document.getElementById('spinner').style.display = 'none';
+        }
+
+        // Event listener for file upload
+        document.getElementById('fileInput').addEventListener('change', function() {
+            showSpinner();  // Show the spinner when the file starts uploading
+
+            // Simulate file processing delay (use actual processing logic here)
+            setTimeout(() => {
+                hideSpinner();  // Hide the spinner after processing
+            }, 2000);  // Simulated delay (replace with actual processing)
+        });
+    </script>
 </body>
 </html>

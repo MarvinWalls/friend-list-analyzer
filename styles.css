@@ -49,7 +49,26 @@ input[type="file"]:hover {
     font-size: 16px;
 }
 
-canvas {
-    display: block;
+#myChart {
+    width: 100%;
+    height: 500px;
+    max-width: 1200px;
     margin: 0 auto;
+}
+
+#friendTable {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+#friendTable th, #friendTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#friendTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
 }
