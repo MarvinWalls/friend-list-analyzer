@@ -1,6 +1,15 @@
+let myChartInstance = null; // Global variable to track the chart instance
+
 function generateChart(labels, yourData, censusData, handleChartClick) {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+
+    // Destroy the previous chart instance if it exists to prevent memory leaks
+    if (myChartInstance) {
+        myChartInstance.destroy();
+    }
+
+    // Create a new chart instance and store it globally
+    myChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -23,7 +32,7 @@ function generateChart(labels, yourData, censusData, handleChartClick) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: false, // Ensures the chart is flexible in size
             scales: {
                 y: {
                     beginAtZero: true,
@@ -42,8 +51,11 @@ function generateChart(labels, yourData, censusData, handleChartClick) {
         }
     });
 
-    // Pass myChart instance to the click handler
+    // Bind the click event to the chart for handling letter clicks
     ctx.onclick = function(evt) {
-        handleChartClick(evt, myChart);
+        handleChartClick(evt, myChartInstance); // Use the global chart instance for click handling
     };
 }
+
+// Ensure the function is globally accessible
+window.generateChart = generateChart;

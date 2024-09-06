@@ -1,5 +1,11 @@
+let currentTableData = null; // Global variable to store current table data
+
 function generateTable(names) {
     let tableBody = document.getElementById('friendTableBody');
+    
+    // Store the names globally for reuse in filtering
+    currentTableData = names;
+    
     tableBody.innerHTML = ''; // Clear previous data
 
     names.forEach(friendName => {
@@ -12,11 +18,12 @@ function generateTable(names) {
     document.getElementById('friendTable').style.display = 'table'; // Show the table
 }
 
-function filterTableByLetter(letter, names) {
+function filterTableByLetter(letter) {
     let tableBody = document.getElementById('friendTableBody');
     tableBody.innerHTML = ''; // Clear previous data
 
-    let filteredNames = names.filter(name => name.charAt(0).toUpperCase() === letter);
+    // Use the globally stored currentTableData to filter by letter
+    let filteredNames = currentTableData.filter(name => name.charAt(0).toUpperCase() === letter);
 
     filteredNames.forEach(friendName => {
         let truncatedName = friendName.length > 20 ? friendName.substring(0, 20) + '...' : friendName; // Limit name length
