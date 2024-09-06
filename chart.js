@@ -23,8 +23,7 @@ function generateChart(labels, yourData, censusData, handleChartClick) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 2,
+            maintainAspectRatio: false, // Allow more flexibility with the chart's size
             scales: {
                 y: {
                     beginAtZero: true,
@@ -46,5 +45,6 @@ function generateChart(labels, yourData, censusData, handleChartClick) {
     ctx.onclick = handleChartClick;
 }
 
-// Make the function globally accessible
+// Ensure the function is globally accessible
 window.generateChart = generateChart;
+

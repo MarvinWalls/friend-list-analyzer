@@ -126,7 +126,14 @@ function getCensusData(letter) {
 
 // Handle chart click events (optional)
 function handleChartClick(event) {
-    // Logic for handling chart click events
+    var activePoints = myChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+    if (activePoints.length > 0) {
+        var clickedIndex = activePoints[0].index;
+        var clickedLetter = myChart.data.labels[clickedIndex]; // Get the clicked letter
+
+        // Filter the table based on the clicked letter
+        filterTableByLetter(clickedLetter, names); // Pass names and clickedLetter to filter
+    }
 }
 
 // Make functions globally accessible

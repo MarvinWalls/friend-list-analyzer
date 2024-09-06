@@ -50,7 +50,9 @@ input[type="file"]:hover {
 }
 
 #myChart {
-    max-width: 1200px; /* Restrict max-width instead of setting width */
+    width: 100%;
+    height: 600px; /* Increase the height */
+    max-width: 1200px;
     margin: 0 auto;
 }
 

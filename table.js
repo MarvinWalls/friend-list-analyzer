@@ -21,8 +21,11 @@ function filterTableByLetter(letter, names) {
         let row = `<tr><td>${letter}</td><td>${friendName}</td></tr>`;
         tableBody.innerHTML += row;
     });
+
+    // Show the filtered table if it's hidden
+    document.getElementById('friendTable').style.display = 'table';
 }
 
-// Make the functions globally accessible
+// Ensure the functions are accessible globally
 window.generateTable = generateTable;
 window.filterTableByLetter = filterTableByLetter;
