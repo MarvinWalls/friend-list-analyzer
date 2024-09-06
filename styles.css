@@ -1,4 +1,5 @@
-body {
+html, body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
@@ -54,6 +55,7 @@ input[type="file"]:hover {
     height: 500px; /* Fixed height */
     max-width: 900px; /* Max width to avoid stretching */
     margin: 0 auto; /* Center the chart */
+    overflow: hidden; /* Prevent unexpected overflow */
 }
 
 #friendTable {
@@ -65,6 +67,7 @@ input[type="file"]:hover {
     word-wrap: break-word; /* Prevent long names from breaking the layout */
     max-height: 400px; /* Limit the height of the table */
     overflow-y: auto; /* Add vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 #friendTable th, #friendTable td {
