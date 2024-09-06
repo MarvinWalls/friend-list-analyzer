@@ -41,6 +41,9 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         // Process the names data
         processNameData(userName, names);
 
+        // Generate the friends list table
+        generateTable(names);
+
         // Hide the loading spinner after processing
         hideLoadingSpinner();
     };
@@ -66,7 +69,6 @@ function hideLoadingSpinner() {
 
 // Function to handle name processing
 function processNameData(userName, names) {
-    // Example processing logic (replace with actual data handling)
     console.log(userName, names);
 
     // Frequency of first letters in the user's friend list
@@ -81,10 +83,33 @@ function processNameData(userName, names) {
     let yourData = labels.map(letter => ((letterFrequency[letter] / names.length) * 100).toFixed(2)); // % frequency
     let censusData = labels.map(letter => getCensusData(letter)); // Replace with real census data function
 
+    // Get the first letter of the user's name
+    let userFirstLetter = userName.charAt(0).toUpperCase();
+    let userLetterFrequency = ((letterFrequency[userFirstLetter] / names.length) * 100).toFixed(2);
+    let censusLetterFrequency = getCensusData(userFirstLetter) || 0;
+    let percentageDifference = (((userLetterFrequency - censusLetterFrequency) / censusLetterFrequency) * 100).toFixed(2);
+
+    // Determine the effect message based on percentage difference
+    let effectMessage = '';
+    if (percentageDifference > 20) {
+        effectMessage = "Based on your friends, you are heavily affected by the name-letter effect you simple creature you.";
+    } else if (percentageDifference > 10) {
+        effectMessage = "Based on your friends, the name-letter is moderately affecting your life.";
+    } else if (percentageDifference > 0) {
+        effectMessage = "Based on your friends, you are mildly affected by the name-letter effect.";
+    } else {
+        effectMessage = "The name-letter effect doesn't seem present in your life.";
+    }
+
     // Now call the chart generation function
     generateChart(labels, yourData, censusData, handleChartClick);
 
-    document.getElementById('results').innerHTML = `<p>Processed ${names.length} friends for user ${userName}.</p>`;
+    // Update the results section with personalized greeting and effect message
+    document.getElementById('results').innerHTML = `
+        <h3>Hello ${userName}! Your first name starts with '${userFirstLetter}', 
+        which appears ${percentageDifference}% ${percentageDifference >= 0 ? 'more' : 'less'} 
+        than the census average.</h3>
+        <p>${effectMessage}</p>`;
 }
 
 // Example function to get census data for a letter
@@ -104,10 +129,12 @@ function handleChartClick(event) {
     // Logic for handling chart click events
 }
 
-// Ensure the functions are globally accessible
+// Make functions globally accessible
 window.processNameData = processNameData;
 window.getCensusData = getCensusData;
 window.handleChartClick = handleChartClick;
+window.generateTable = generateTable;
+window.filterTableByLetter = filterTableByLetter;
 
 // Make functions globally accessible
 window.showLoadingSpinner = showLoadingSpinner;
