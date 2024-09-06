@@ -1,3 +1,4 @@
+// Event listener for file upload
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
 
@@ -67,8 +68,46 @@ function hideLoadingSpinner() {
 function processNameData(userName, names) {
     // Example processing logic (replace with actual data handling)
     console.log(userName, names);
+
+    // Frequency of first letters in the user's friend list
+    let letterFrequency = {};
+    names.forEach(name => {
+        let firstLetter = name.charAt(0).toUpperCase();
+        letterFrequency[firstLetter] = (letterFrequency[firstLetter] || 0) + 1;
+    });
+
+    // Generate labels and data arrays for the chart
+    let labels = Object.keys(letterFrequency).sort();
+    let yourData = labels.map(letter => ((letterFrequency[letter] / names.length) * 100).toFixed(2)); // % frequency
+    let censusData = labels.map(letter => getCensusData(letter)); // Replace with real census data function
+
+    // Now call the chart generation function
+    generateChart(labels, yourData, censusData, handleChartClick);
+
     document.getElementById('results').innerHTML = `<p>Processed ${names.length} friends for user ${userName}.</p>`;
 }
+
+// Example function to get census data for a letter
+function getCensusData(letter) {
+    const censusFrequencies = {
+        'A': 7.32, 'B': 5.39, 'C': 8.16, 'D': 8.48, 'E': 5.22, 'F': 1.98,
+        'G': 3.72, 'H': 2.56, 'I': 0.77, 'J': 10.33, 'K': 4.60, 'L': 6.25,
+        'M': 9.73, 'N': 2.01, 'O': 0.50, 'P': 2.98, 'Q': 0.04, 'R': 6.08,
+        'S': 6.45, 'T': 3.80, 'U': 0.02, 'V': 1.61, 'W': 1.66, 'X': 0.01,
+        'Y': 0.22, 'Z': 0.09
+    };
+    return censusFrequencies[letter] || 0; // Return 0 if letter is not found
+}
+
+// Handle chart click events (optional)
+function handleChartClick(event) {
+    // Logic for handling chart click events
+}
+
+// Ensure the functions are globally accessible
+window.processNameData = processNameData;
+window.getCensusData = getCensusData;
+window.handleChartClick = handleChartClick;
 
 // Make functions globally accessible
 window.showLoadingSpinner = showLoadingSpinner;

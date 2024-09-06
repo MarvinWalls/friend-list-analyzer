@@ -50,9 +50,7 @@ input[type="file"]:hover {
 }
 
 #myChart {
-    width: 100%;
-    height: 500px;
-    max-width: 1200px;
+    max-width: 1200px; /* Restrict max-width instead of setting width */
     margin: 0 auto;
 }
 
@@ -74,7 +72,7 @@ input[type="file"]:hover {
 }
 
 /* Spinner styles */
-.spinner {
+#spinner {
     border: 8px solid #f3f3f3; /* Light grey */
     border-top: 8px solid #3498db; /* Blue */
     border-radius: 50%;
@@ -82,6 +80,7 @@ input[type="file"]:hover {
     height: 50px;
     animation: spin 2s linear infinite;
     margin: 20px auto;
+    display: none; /* Ensure it starts hidden */
 }
 
 @keyframes spin {
