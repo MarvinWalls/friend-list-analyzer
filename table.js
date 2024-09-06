@@ -4,7 +4,8 @@ function generateTable(names) {
 
     names.forEach(friendName => {
         let firstLetter = friendName.charAt(0).toUpperCase();
-        let row = `<tr><td>${firstLetter}</td><td>${friendName}</td></tr>`;
+        let truncatedName = friendName.length > 20 ? friendName.substring(0, 20) + '...' : friendName; // Limit name length
+        let row = `<tr><td>${firstLetter}</td><td>${truncatedName}</td></tr>`;
         tableBody.innerHTML += row;
     });
 
@@ -18,7 +19,8 @@ function filterTableByLetter(letter, names) {
     let filteredNames = names.filter(name => name.charAt(0).toUpperCase() === letter);
 
     filteredNames.forEach(friendName => {
-        let row = `<tr><td>${letter}</td><td>${friendName}</td></tr>`;
+        let truncatedName = friendName.length > 20 ? friendName.substring(0, 20) + '...' : friendName; // Limit name length
+        let row = `<tr><td>${letter}</td><td>${truncatedName}</td></tr>`;
         tableBody.innerHTML += row;
     });
 

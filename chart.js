@@ -38,16 +38,14 @@ function generateChart(labels, yourData, censusData, handleChartClick) {
                         text: 'Letter'
                     }
                 }
-            },
-            onClick: function (evt, activeElements) {
-                if (activeElements.length > 0) {
-                    const clickedIndex = activeElements[0].index;
-                    const clickedLabel = this.data.labels[clickedIndex]; // Get clicked label/letter
-                    handleChartClick(clickedLabel); // Pass clicked letter to the handler
-                }
             }
         }
     });
+
+    // Pass myChart instance to the click handler
+    ctx.onclick = function(evt) {
+        handleChartClick(evt, myChart);
+    };
 }
 
 // Ensure the function is globally accessible
