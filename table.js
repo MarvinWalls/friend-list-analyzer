@@ -1,4 +1,4 @@
-export function generateTable(names) {
+function generateTable(names) {
     let tableBody = document.getElementById('friendTableBody');
     tableBody.innerHTML = ''; // Clear previous data
 
@@ -11,7 +11,7 @@ export function generateTable(names) {
     document.getElementById('friendTable').style.display = 'table'; // Show the table
 }
 
-export function filterTableByLetter(letter, names) {
+function filterTableByLetter(letter, names) {
     let tableBody = document.getElementById('friendTableBody');
     tableBody.innerHTML = ''; // Clear previous data
 
